@@ -20,9 +20,9 @@ This case study analyzes the potability of water samples based on various chemic
 
 **Research Questions**:
 
-1. What is the distribution of safe vs. unsafe water samples?
-2. What key factors influence water potability the most? (Focus on pH)
-3. What trends can we observe across different hardness levels?
+1. Question 1: What is the distribution of safe vs. unsafe water samples?
+2. Question 2: What key factors influence water potability the most? (Focus on pH)
+3. Question 3: What trends can we observe across different hardness levels?
 
 ---
 
