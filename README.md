@@ -4,7 +4,7 @@
 
 # 💧 Water Potability Analysis – Data Analytics Case Study
 
-**By: Isra Saadat**
+**By: Isra S.**
 
 ---
 
