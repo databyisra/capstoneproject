@@ -1,0 +1,94 @@
+Step-by-Step Data Cleaning Process for Water Potability Dataset
+1. Upload and load raw data into BigQuery
+Imported the original water quality dataset into BigQuery under the table:
+bold-artifact-458415-p5.WaterMetrics.WData
+
+2. Check for missing values in each column
+Ran a query to count missing (NULL) values for all columns to identify which features needed cleaning:
+
+sql
+Copy
+Edit
+SELECT 
+  COUNT(*) AS total_rows,
+  COUNTIF(pH IS NULL) AS pH_missing,
+  COUNTIF(Hardness IS NULL) AS hardness_missing,
+  COUNTIF(Solids IS NULL) AS solids_missing,
+  COUNTIF(Chloramines IS NULL) AS chloramines_missing,
+  COUNTIF(Sulfate IS NULL) AS sulfate_missing,
+  COUNTIF(Conductivity IS NULL) AS conductivity_missing,
+  COUNTIF(Organic_carbon IS NULL) AS organic_carbon_missing,
+  COUNTIF(Trihalomethanes IS NULL) AS trihalomethanes_missing,
+  COUNTIF(Turbidity IS NULL) AS turbidity_missing,
+  COUNTIF(potability IS NULL) AS potability_missing
+FROM `bold-artifact-458415-p5.WaterMetrics.WData`;
+Found missing values mainly in pH, Sulfate, and Trihalomethanes.
+
+3. Remove rows missing the target variable potability (if any)
+Filtered out any rows where potability was missing to ensure target variable integrity (though in this dataset, there were no missing potability values):
+
+sql
+Copy
+Edit
+CREATE OR REPLACE TABLE `bold-artifact-458415-p5.WaterMetrics.WData_no_missing_potability` AS
+SELECT *
+FROM `bold-artifact-458415-p5.WaterMetrics.WData`
+WHERE potability IS NOT NULL;
+4. Impute missing values for key features with median values
+Calculated medians for the columns with missing data and replaced missing entries with these median values to keep the dataset complete:
+
+sql
+Copy
+Edit
+CREATE OR REPLACE TABLE `bold-artifact-458415-p5.WaterMetrics.WData_cleaned` AS
+
+WITH medians AS (
+  SELECT
+    APPROX_QUANTILES(pH, 2)[OFFSET(1)] AS median_pH,
+    APPROX_QUANTILES(Sulfate, 2)[OFFSET(1)] AS median_sulfate,
+    APPROX_QUANTILES(Trihalomethanes, 2)[OFFSET(1)] AS median_trihalomethanes
+  FROM `bold-artifact-458415-p5.WaterMetrics.WData`
+)
+
+SELECT
+  IFNULL(pH, median_pH) AS pH,
+  Hardness,
+  Solids,
+  Chloramines,
+  IFNULL(Sulfate, median_sulfate) AS Sulfate,
+  Conductivity,
+  Organic_carbon,
+  IFNULL(Trihalomethanes, median_trihalomethanes) AS Trihalomethanes,
+  Turbidity,
+  potability
+FROM `bold-artifact-458415-p5.WaterMetrics.WData`, medians;
+5. Verify data cleaning results
+Checked distribution of potable vs. non-potable samples to confirm data consistency after cleaning:
+
+sql
+Copy
+Edit
+SELECT potability, COUNT(*) AS count
+FROM `bold-artifact-458415-p5.WaterMetrics.WData_cleaned`
+GROUP BY potability;
+Confirmed the cleaned dataset retained the original balance (around 61% non-potable, 39% potable).
+
+6. Performed correlation analysis between features and potability
+Calculated correlations to understand linear relationships between water quality features and potability:
+
+sql
+Copy
+Edit
+SELECT
+  CORR(pH, CAST(potability AS FLOAT64)) AS corr_pH,
+  CORR(Hardness, CAST(potability AS FLOAT64)) AS corr_Hardness,
+  CORR(Solids, CAST(potability AS FLOAT64)) AS corr_Solids,
+  CORR(Chloramines, CAST(potability AS FLOAT64)) AS corr_Chloramines,
+  CORR(Sulfate, CAST(potability AS FLOAT64)) AS corr_Sulfate,
+  CORR(Conductivity, CAST(potability AS FLOAT64)) AS corr_Conductivity,
+  CORR(Organic_carbon, CAST(potability AS FLOAT64)) AS corr_Organic_carbon,
+  CORR(Trihalomethanes, CAST(potability AS FLOAT64)) AS corr_Trihalomethanes,
+  CORR(Turbidity, CAST(potability AS FLOAT64)) AS corr_Turbidity
+FROM `bold-artifact-458415-p5.WaterMetrics.WData_cleaned`;
+Found weak correlations, indicating potability depends on a combination of factors.
+
