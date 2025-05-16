@@ -62,7 +62,7 @@ WHERE potability IS NOT NULL;
 
 ## 📊 4. Analyze: SQL-Based Exploratory Queries
 
-### ✅ Q1: Distribution of Potable vs Non-Potable Water
+### Q1: Distribution of Potable vs Non-Potable Water
 
 ```sql
 SELECT 
@@ -78,7 +78,7 @@ ORDER BY potability;
 
 ---
 
-### 🧪 Q2: Influence of pH Range on Potability
+### Q2: Influence of pH Range on Potability
 
 ```sql
 SELECT
@@ -99,7 +99,7 @@ ORDER BY sample_count DESC;
 
 ---
 
-### 🧱 Q3: Potability Across Hardness Levels
+### Q3: Potability Across Hardness Levels
 
 ```sql
 SELECT
