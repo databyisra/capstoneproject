@@ -1,3 +1,13 @@
+Your 3 Research Questions:
+What is the distribution of safe vs. unsafe water samples, and what trends can we observe?
+→ Helps understand systemic issues and where attention or investment is needed.
+
+What key factors influence water potability the most?
+→ Similar to identifying key drivers of employee retention or performance. Helps focus resources on the most impactful variables.
+
+(Repeated question, same as #1) What is the distribution of safe vs. unsafe water samples, and what trends can we observe?
+→ Helps understand systemic issues and where attention or investment is needed.
+
 Step-by-Step Data Cleaning Process for Water Potability Dataset
 1. Upload and load raw data into BigQuery
 Imported the original water quality dataset into BigQuery under the table:
