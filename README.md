@@ -8,13 +8,13 @@
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 This case study analyzes the potability of water samples based on various chemical and physical attributes. The goal is to identify the distribution of safe vs. unsafe water, determine key factors affecting potability (especially pH), and uncover trends across hardness levels.
 
 ---
 
-## 🧭 1. Ask: Define the Problem and Research Questions
+## 1. Ask: Define the Problem and Research Questions
 
 **Objective**: Assess the quality of water samples and identify the most influential factors affecting potability.
 
@@ -26,7 +26,7 @@ This case study analyzes the potability of water samples based on various chemic
 
 ---
 
-## 🧾 2. Prepare: Understand the Data
+## 2. Prepare: Understand the Data
 
 **Source**: [Kaggle – Water Quality: Drinking Water Potability Dataset](https://www.kaggle.com/datasets/adityakadiwal/water-potability)
 **Sample Size**: 3,276 water samples
@@ -48,7 +48,7 @@ This case study analyzes the potability of water samples based on various chemic
 
 ---
 
-## 🧹 3. Process: Data Cleaning
+## 3. Process: Data Cleaning
 
 Missing values in the `potability` field were removed, and overall data integrity was verified.
 
@@ -60,7 +60,7 @@ WHERE potability IS NOT NULL;
 
 ---
 
-## 📊 4. Analyze: SQL-Based Exploratory Queries
+## 4. Analyze: SQL-Based Exploratory Queries
 
 ### Q1: Distribution of Potable vs Non-Potable Water
 
@@ -121,7 +121,7 @@ ORDER BY sample_count DESC;
 
 ---
 
-## 📈 5. Share: Visual Insights
+## 5. Share: Visual Insights
 
 Detailed dashboards are available via Tableau. See next sheet or use the following links:
 
@@ -131,7 +131,7 @@ Detailed dashboards are available via Tableau. See next sheet or use the followi
 
 ---
 
-## 📌 6. Act: Final Recommendations
+## 6. Act: Final Recommendations
 
 ### 🔍 Key Takeaways
 
